@@ -104,7 +104,7 @@ export default {
 
 .box {
   position:fixed;
-
+  background-image: url("../assets/xk.gif") !important;
   top: 200px;
   left: 1100px;
 
@@ -121,6 +121,7 @@ export default {
   border-right: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
   background: rgba(136, 139, 141, 0.7);
+
   z-index: 99;
 }
 

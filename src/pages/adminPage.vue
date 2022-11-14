@@ -18,14 +18,14 @@
               style="border: 0;"
               active-text-color="#ffd04b">
 
-            <el-submenu index="1" >
+            <el-submenu index="" >
               <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span>整体菜单</span>
               </template>
 
-              <el-menu-item index="1" @click="goToUser()"><i class="el-icon-user"></i>用户管理</el-menu-item>
-              <el-menu-item index="2" @click="goToBooks()">
+              <el-menu-item index="" @click="goToUser()"><i class="el-icon-user"></i>用户管理</el-menu-item>
+              <el-menu-item index="" @click="goToBooks()">
                 <i class="el-icon-reading"></i>
                 <span slot="title" >图书管理</span>
               </el-menu-item>

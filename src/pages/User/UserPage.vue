@@ -32,6 +32,16 @@
                 <span slot="title" >借书情况</span>
               </el-menu-item>
 
+              <el-menu-item index="3" @click="goToCar()">
+                <i class="el-icon-shopping-cart-1"></i>
+                <span slot="title" >购物车</span>
+              </el-menu-item>
+
+              <el-menu-item index="4" @click="goToHistory()">
+                <i class="el-icon-pie-chart"></i>
+                <span slot="title" >历史记录</span>
+              </el-menu-item>
+
 
 
 
@@ -68,6 +78,12 @@ export default {
     goToBorrow(){
       this.$router.push('/user/borrow');
 
+    },
+    goToCar(){
+      this.$router.push('/user/car');
+    },
+    goToHistory(){
+      this.$router.push('/user/history');
     },
     //退出登陆
     loginOut(){

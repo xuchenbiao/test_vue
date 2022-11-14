@@ -1,6 +1,10 @@
 <template>
 <div class="border">
-  <el-input v-model="input" placeholder="请输入二级密码" @keyup.enter.native="spwd()"></el-input>
+
+  <div class="search" style="float: left;">
+    <el-input v-model="input" type="password" placeholder="请输入二级密码" @keyup.enter.native="spwd()"></el-input>
+    <el-button @click="spwd()"><i class="el-icon-search" ></i></el-button>
+  </div>
 
   <el-table
       :data="tableData"
@@ -97,6 +101,11 @@ export default {
              if(res.data.flag===true){
                this.$message.success("二级密码正确!欢迎你,管理员");
                this.secondPassword=true;
+               this.input='';
+             }
+             else {
+               this.$message.warning(res.data.msg);
+               this.input='';
              }
            }
        )

@@ -3,14 +3,19 @@ import Vue from "vue";
 Vue.use(VueRouter);
 
 // 登陆组件
+
 import Login from "@/pages/Login";
 import adminPage from "@/pages/adminPage";
 import showBooks from "@/pages/showBooks";
 import showUser from  "@/pages/showUser";
+import homePage from  "@/pages/homePage";
+
 
 import userPage from "@/pages/User/UserPage";
 import userShowBooks from "@/pages/User/UserShowBooks";
 import userBorrowBooks from "@/pages/User/UserBorrowBooks";
+import userShowCar from "@/pages/User/UserShowCar";
+import userShowHistory from "@/pages/User/UserShowHistory";
 const router = new VueRouter({
     routes: [
         {
@@ -24,7 +29,7 @@ const router = new VueRouter({
             children:[
                 {
                     path:'',
-                    redirect:"user"
+                    redirect:"home"
                 },
 
                 {
@@ -37,6 +42,10 @@ const router = new VueRouter({
 
                 },
 
+                {
+                    path: 'home',
+                    component: homePage,
+                }
 
 
 
@@ -62,7 +71,19 @@ const router = new VueRouter({
                 {
                     path: 'borrow',
                     component: userBorrowBooks,
-                }
+                },
+
+                {
+                    path:'car',
+                    component: userShowCar,
+                },
+
+                {
+                    path: 'history',
+                    component: userShowHistory,
+                },
+
+              
 
             ]
         },

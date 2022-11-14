@@ -19,12 +19,15 @@
 
       <el-table-column prop="description" label="描述" align="center"></el-table-column>
       <el-table-column prop="number" label="数量" align="center"></el-table-column>
+      <el-table-column prop="price" label="价格" align="center"></el-table-column>
+
 
       <el-table-column label="操作" align="center">
 
         <template slot-scope="scope">
 
           <el-button type="success" size="mini" @click="handleBorrow(scope.row)">借书</el-button>
+          <el-button  type="primary" size="mini" @click="handleCar(scope.row)">加入购物车</el-button>
 
 
         </template>s
@@ -77,6 +80,30 @@
 
 
     </div>
+
+<!--    加入购物车页面-->
+
+    <div class="add-form">
+      <el-dialog title="数量" :visible.sync="dialogFormVisibleCar">
+        <el-row>
+          <el-input v-model="car.num" type="textarea"> </el-input>
+        </el-row>
+
+        <div slot="footer" class="dialog-footer">
+
+          <el-button @click="cancel()">取消</el-button>
+
+          <el-button type="primary" @click="btnCar()">确定</el-button>
+
+
+
+
+
+        </div>
+      </el-dialog>
+
+
+    </div>
   </div>
 
 
@@ -95,6 +122,7 @@ export default {
       dialogFormVisible: false,//添加表单是否可见
       dialogFormVisible4Edit:false,//编辑表单是否可见
       dialogFormVisibleBorrow:false, //编辑借书表单是否可见
+      dialogFormVisibleCar:false, //编辑加入购物车表单是否可见
       formData: {},//表单数据
       rules: {//校验规则
         type: [{ required: true, message: '图书类别为必填项', trigger: 'blur' }],
@@ -113,6 +141,12 @@ export default {
         borrowNums:'',
         id:''
       },
+
+      car:{
+        name:'',
+        price:'',
+        num:'',
+      }
     }
 
 
@@ -164,24 +198,16 @@ export default {
       this.formData={};
     },
 
-    //添加
-    handleAdd () {
-      axios.post("http://localhost/books",this.formData).then((res)=>{
-        console.log(res)
-        this.dialogFormVisible = false;
-        this.$message.success("添加成功");
-        this.getAll();
-
-      })
-    },
 
     //取消
     cancel(){
       this.dialogFormVisible=false;
       this.dialogFormVisible4Edit=false;
       this.dialogFormVisibleBorrow=false;
+      this.dialogFormVisibleCar=false;
       this.borrow.borrowNums=''
-      this.borrow.borrowNums=''
+
+      this.car.num=''
       this.$message.info("当前操作取消");
     },
 
@@ -234,6 +260,33 @@ export default {
       ).finally(()=>{
         this.getAll();
       })
+    },
+    //弹出购物添加界面
+    handleCar(data){
+      console.log('购物车添加界面数据',data);
+      this.dialogFormVisibleCar=true;
+      this.car.name=data.name;
+      this.car.price=data.price;
+    },
+    //正式添加进购物车
+    btnCar(){
+      axios.post('http://localhost/cars',{
+        name:this.car.name,
+        price: this.car.price,
+        number:this.car.num
+      }).then(
+          res=>{
+            console.log("加入购物车步骤",res.data.data)
+            if (res.data.flag===true){
+              this.$message.success("加入购物车成功!");
+              this.car.num='';
+              this.dialogFormVisibleCar=false;
+            }
+            else {
+              this.$message.warning("数量错误!请查看是否数量超过现有存量!");
+            }
+          }
+      )
     },
 
 
@@ -289,7 +342,7 @@ export default {
             }
           }
       )
-    }
+    },
 
 
 

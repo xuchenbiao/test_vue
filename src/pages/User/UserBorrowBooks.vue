@@ -10,7 +10,7 @@
 
     </div>
 
-    <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
+    <el-table size="small" current-row-key="id" :data="dataList" stripe border highlight-current-row>
 
       <el-table-column type="index" align="center" label="序号"></el-table-column>
 
@@ -204,5 +204,10 @@ export default {
 </script>
 
 <style scoped>
-
+.border{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+}
 </style>
