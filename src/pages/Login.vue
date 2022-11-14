@@ -1,7 +1,8 @@
 <template>
   <div id="Login" style="position: relative">
     <!-- 登陆注册弹窗界面 -->
-    <ShowLogin ></ShowLogin>
+    <ShowLogin v-if="detail" @func="getDetail" ></ShowLogin>
+    <ShowRegist v-if="Rdetail" @func1="getDetail1"></ShowRegist>
     <!-- 整体界面布局 -->
     <div class="cas">
       <div class="header">
@@ -30,10 +31,10 @@
 
 <script>
 import ShowLogin from "@/components/ShowLogin.vue";
-
+import ShowRegist from  "@/components/ShowRegist";
 export default {
   name: "LoginS",
-  components: { ShowLogin },
+  components: { ShowLogin ,ShowRegist },
   data() {
     return {
       image: [
@@ -50,14 +51,28 @@ export default {
       ],
 
       // 展示或者隐藏登陆界面
-      detail:false
+      detail:false,
+      Rdetail:false
     };
   },
 
   methods: {
     showDetail() {
+        this.detail=true;
+    },
+
+    //登陆组件返回值
+    getDetail(data1,data2){
+      this.detail=data1;
+      this.Rdetail=data2;
+
 
     },
+    //注册组件返回值
+    getDetail1(data1,data2){
+      this.detail=data1;
+      this.Rdetail=data2
+    }
   },
 };
 </script>

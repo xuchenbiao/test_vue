@@ -1,11 +1,12 @@
 <template>
   <div class="box">
-    <i class="el-icon-close" @click="closeDetail()"   style="position:relative ; font-size: 20px;top:-75px; left: 164px; cursor: pointer;"></i>
-
+    <i class="el-icon-close" @click="closeDetail()"   style="position:relative ; font-size: 20px;top:-84px; left: 164px; cursor: pointer;"></i>
+    <span @click="back()"    style="color: rgb(22,22,22);position: relative; left:-100px; cursor: pointer;" ><i class="el-icon-arrow-left" ></i>返回</span>
     <div class="c1">
-      <h1 style="text-align: center" >登陆</h1>
+
+      <h1 style="text-align: center"  >注册</h1>
       <div class="input-box">
-        <label>用户名</label>
+        <label>新用户名</label>
         <input type="text" name="username" v-model="username" />
       </div>
       <div class="input-box">
@@ -18,17 +19,10 @@
         />
       </div>
       <div class="btn-box">
-
-
-        <div class="input-box" style="float: left" >
-          <input type="checkbox" v-model="is_admin" style="height: 12px;width: 12px;">
-          <label > 是否为管理员</label>
-        </div>
-
-
+        <a href="#">忘记密码?</a>
         <div>
-          <button id="login" @click="login()">登录</button>
-          <a id="regist" @click="regist()">注册</a>
+          <button id="regist" @click="regist()">注册</button>
+
         </div>
       </div>
     </div>
@@ -39,58 +33,42 @@
 import axios from "axios";
 
 export default {
-  name: "ShowLogin",
+  name: "ShowRegist",
   data() {
     return {
       username:'',
       password:'',
-      is_admin:false,
     };
   },
   methods:{
-    login(){
-      if(this.is_admin===true){
-        axios.post("http://localhost/adminis",{admininame:this.username,adminipassword:this.password}).then(
-            res=>{
-              console.log(res.data)
-              if (res.data.flag===true){
-                this.$message.success('登陆成功!');
-                this.$router.push('/admin')
 
-              }else {
-                this.$message.warning(res.data.msg)
-              }
-
-
-            }
-        )
-      }
-      else if(this.is_admin===false){
-        axios.post("http://localhost/logins",{
-          username:this.username,
-          password:this.password,
-        }).then(
-            res=>{
-              if (res.data.flag===true){
-                location.href='https://www.baidu.com'
-              }else {
-                this.$message.warning(res.data.msg)
-              }
-            }
-        )
-      }
-
-    },
 
     closeDetail(){
       //向父组件传递参数关闭登陆窗口
-      this.$emit('func',false);
+      this.$emit('func1',false,false);
+    },
+    regist(){
+      axios.post("http://localhost/enrolls",{username:this.username,password:this.password}).then(
+          res=>{
+            console.log(res.data);
+            if(res.data.flag===true){
+                this.$message.success(res.data.msg);
+
+            //    注册成功后打开登陆组件,关闭注册组件
+              setTimeout(()=>{
+                this.$emit('func1',true,false);
+              },1000)
+
+            }
+            else {
+              this.$message.warning(res.data.msg)
+            }
+          }
+      )
     },
 
-    regist(){
-    //  关闭登陆组件,打开注册组件
-      this.$emit('func',false,true)
-
+    back(){
+      this.$emit('func1',true,false);
     }
   }
 };
@@ -196,7 +174,6 @@ export default {
   border-radius: 5px;
   transition: 0.2s;
   margin-right: 20px;
-  cursor: pointer;
 }
 .box .btn-box > div > a {
   width: 118px;
@@ -211,8 +188,6 @@ export default {
   font-size: 14px;
   text-align: center;
   line-height: 35px;
-  cursor: pointer;
-
 }
 
 .box .btn-box > div > button:nth-of-type(2) {
@@ -220,10 +195,6 @@ export default {
 }
 
 .box .btn-box > div > button:hover {
-  border: 1px solid rgba(248, 108, 76, 0.8);
-  background: rgba(248, 108, 76, 0.5);
-}
-.box .btn-box > div > a:hover {
   border: 1px solid rgba(248, 108, 76, 0.8);
   background: rgba(248, 108, 76, 0.5);
 }
