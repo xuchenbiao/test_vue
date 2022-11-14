@@ -7,8 +7,6 @@
 
       <el-input placeholder="图书名称" v-model="pagination.name" @keyup.enter.native="searchByName()" style="width: 200px;" class="filter-item"></el-input>
       <el-button @click="searchByName()" class="dalfBut">查询</el-button>
-      <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
-
     </div>
 
     <el-table size="small" border  current-row-key="id" :data="dataList" stripe highlight-current-row>
@@ -26,13 +24,10 @@
 
         <template slot-scope="scope">
 
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="success" size="mini" @click="handleBorrow(scope.row)">借书</el-button>
 
 
-
-        </template>
+        </template>s
 
       </el-table-column>
 
@@ -58,145 +53,30 @@
 
     </div>
 
-    <!--             新增标签弹层-->
 
+
+    <!--            借书数量界面-->
     <div class="add-form">
-
-      <el-dialog title="新增图书" :visible.sync="dialogFormVisible">
-
-        <el-form ref="dataAddForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
-
-          <el-row>
-
-            <el-col :span="12">
-
-              <el-form-item label="图书类别" prop="type">
-
-                <el-input v-model="formData.type"/>
-
-              </el-form-item>
-
-            </el-col>
-
-            <el-col :span="12">
-
-              <el-form-item label="图书名称" prop="name">
-
-                <el-input v-model="formData.name"/>
-
-              </el-form-item>
-
-            </el-col>
-            <el-col :span="12">
-
-              <el-form-item label="图书数量" prop="number">
-
-                <el-input v-model="formData.number"/>
-
-              </el-form-item>
-
-            </el-col>
-
-          </el-row>
-
-
-          <el-row>
-
-            <el-col :span="24">
-
-              <el-form-item label="描述">
-
-                <el-input v-model="formData.description" type="textarea"></el-input>
-
-              </el-form-item>
-
-            </el-col>
-
-          </el-row>
-
-        </el-form>
+      <el-dialog title="借书数量" :visible.sync="dialogFormVisibleBorrow">
+        <el-row>
+          <el-input v-model="borrow.borrowNums" type="textarea"> </el-input>
+        </el-row>
 
         <div slot="footer" class="dialog-footer">
 
           <el-button @click="cancel()">取消</el-button>
 
-          <el-button type="primary" @click="handleAdd()">确定</el-button>
+          <el-button type="primary" @click="btnBorrow()">确定</el-button>
+
+
+
+
 
         </div>
-
       </el-dialog>
 
-    </div>
-
-    <!-- 编辑标签弹层 -->
-
-    <div class="add-form">
-
-      <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
-
-        <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
-
-          <el-row>
-
-            <el-col :span="12">
-
-              <el-form-item label="图书类别" prop="type">
-
-                <el-input v-model="formData.type"/>
-
-              </el-form-item>
-
-            </el-col>
-
-            <el-col :span="12">
-
-              <el-form-item label="图书名称" prop="name">
-
-                <el-input v-model="formData.name"/>
-
-              </el-form-item>
-
-            </el-col>
-            <el-col :span="12">
-
-              <el-form-item label="图书数量" prop="number">
-
-                <el-input v-model="formData.number"/>
-
-              </el-form-item>
-
-            </el-col>
-
-          </el-row>
-
-          <el-row>
-
-            <el-col :span="24">
-
-              <el-form-item label="描述">
-
-                <el-input v-model="formData.description" type="textarea"></el-input>
-
-              </el-form-item>
-
-            </el-col>
-
-          </el-row>
-
-        </el-form>
-
-        <div slot="footer" class="dialog-footer">
-
-          <el-button @click="cancel()">取消</el-button>
-
-          <el-button type="primary" @click="handleEdit()">确定</el-button>
-
-        </div>
-
-      </el-dialog>
 
     </div>
-
   </div>
 
 
@@ -208,7 +88,7 @@
 import axios from "axios";
 
 export default {
-  name: "showBooks",
+  name: "UserShowBooks",
   data(){
     return{
       dataList: [],//当前页要展示的列表数据
@@ -304,31 +184,9 @@ export default {
       this.borrow.borrowNums=''
       this.$message.info("当前操作取消");
     },
-    // 删除
-    handleDelete(row) {
-      //console.log(row)
-      this.$confirm("此操作永久删除当前信息，是否继续？","提示",{type:"info"}).then(()=>{
-        axios.delete("http://localhost/books/"+row.id).then((res)=>{
-          console.log(res);
-          this.$message.success("删除成功");
-        }).finally(()=>{
-          //2.重新加载数据
-          this.getAll();
-        });
-      }).catch(()=>{
-        this.$message.info("取消操作");
-      });
-    },
 
-    //弹出编辑窗口
-    handleUpdate(row) {
-      axios.get("http://localhost/books/"+row.id).then((res)=>{
 
-        this.dialogFormVisible4Edit = true;
-        this.formData = res.data.data;
 
-      })
-    },
 
     //修改
     handleEdit() {
@@ -343,6 +201,39 @@ export default {
         //2.重新加载数据
         this.getAll();
       });
+    },
+
+    //打开借书界面
+    handleBorrow(row){
+      // console.log(row.id)
+      this.dialogFormVisibleBorrow=true;
+      this.borrow.id=row.id
+
+
+    },
+    //进行借书
+    btnBorrow(){
+
+      axios.get("http://localhost/borrows/"+this.borrow.id+"/"+this.borrow.borrowNums).then(
+          res=>{
+            console.log(res.data);
+            if(res.data.flag===true){
+              this.$message.success('借书成功!');
+              this.dialogFormVisibleBorrow=false;
+              this.borrow.borrowNums='';
+
+            }
+            else {
+              this.$message.warning('借书失败!')
+            }
+
+          },
+          err=>{
+            console.log(err.message)
+          }
+      ).finally(()=>{
+        this.getAll();
+      })
     },
 
 

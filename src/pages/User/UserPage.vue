@@ -3,7 +3,7 @@
     <el-container style="height: 100%">
       <el-header>
         <div id="header">
-          <span><i class="el-icon-user-solid"></i>欢迎你,{{username}}</span>
+          <span><i class="el-icon-user-solid"></i>欢迎你,{{ username }}</span>
           <span   @click="loginOut()" style="cursor: pointer"><i class="iconfont icon-tuichu"></i></span>
         </div>
       </el-header>
@@ -23,12 +23,17 @@
                 <i class="el-icon-menu"></i>
                 <span>整体菜单</span>
               </template>
-
-              <el-menu-item index="1" @click="goToUser()"><i class="el-icon-user"></i>用户管理</el-menu-item>
-              <el-menu-item index="2" @click="goToBooks()">
+              <el-menu-item index="1" @click="goToBooks()">
                 <i class="el-icon-reading"></i>
-                <span slot="title" >图书管理</span>
+                <span slot="title" >图书类别</span>
               </el-menu-item>
+              <el-menu-item index="2" @click="goToBorrow()">
+                <i class="el-icon-reading"></i>
+                <span slot="title" >借书情况</span>
+              </el-menu-item>
+
+
+
 
             </el-submenu>
 
@@ -36,7 +41,7 @@
           </el-menu>
         </el-aside>
         <el-main>
-<!--          子组件中的子组件-->
+          <!--          子组件中的子组件-->
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -49,18 +54,20 @@
 <script>
 
 export default {
-  name: "AdminPage",
+  name: "UserPage",
   data(){
     return{
-      username:localStorage.username,
+      username:localStorage.username
     }
   },
   methods:{
-    goToUser(){
-      this.$router.push('/admin/user');
-    },
+
     goToBooks(){
-      this.$router.push('/admin/books')
+      this.$router.push('/user/books');
+    },
+    goToBorrow(){
+      this.$router.push('/user/borrow');
+
     },
     //退出登陆
     loginOut(){

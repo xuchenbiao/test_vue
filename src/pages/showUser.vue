@@ -1,5 +1,6 @@
 <template>
 <div class="border">
+  <el-input v-model="input" placeholder="请输入二级密码" @keyup.enter.native="spwd()"></el-input>
 
   <el-table
       :data="tableData"
@@ -34,6 +35,7 @@
             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
       </template>
     </el-table-column>
+
   </el-table>
 
 
@@ -59,7 +61,9 @@ export default {
     return {
       tableData: [],
     //  二级密码输入,
-      secondPassword:'',
+      secondPassword:false,
+      //输入框
+      input:'',
     }
   },
   created(){
@@ -85,7 +89,18 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
     },
-
+  //确定二级密码
+    spwd(){
+       axios.post("http://localhost/adminiplus",{password:this.input}).then(
+           res=>{
+             console.log(res.data);
+             if(res.data.flag===true){
+               this.$message.success("二级密码正确!欢迎你,管理员");
+               this.secondPassword=true;
+             }
+           }
+       )
+    }
 
   }
 }
@@ -98,10 +113,11 @@ export default {
   height: 100%;
   background: #fff;
 
-
-
-
-
+}
+.el-input{
+  width: 200px;
+  height: 110px;
+  float: left;
 }
 
 </style>

@@ -55,6 +55,8 @@ export default {
               console.log(res.data)
               if (res.data.flag===true){
                 this.$message.success('登陆成功!');
+                localStorage.username=this.username;
+
                 this.$router.push('/admin')
 
               }else {
@@ -72,7 +74,9 @@ export default {
         }).then(
             res=>{
               if (res.data.flag===true){
-                location.href='https://www.baidu.com'
+                this.$message.success('登陆成功!');
+                localStorage.username=this.username;
+                this.$router.push('/user')
               }else {
                 this.$message.warning(res.data.msg)
               }

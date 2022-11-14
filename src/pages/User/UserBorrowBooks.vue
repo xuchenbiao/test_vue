@@ -1,0 +1,208 @@
+<template>
+  <div class="border">
+
+    <div class="filter-container">
+      <!--                <el-input placeholder="图书类别" v-model="pagination.type"  style="width: 200px;" class="filter-item"></el-input>-->
+      <el-input placeholder="图书名称" v-model="pagination.name" style="width: 200px;" class="filter-item"></el-input>
+      <el-button @click="searchBooks()" class="dalfBut">查询</el-button>
+
+
+
+    </div>
+
+    <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
+
+      <el-table-column type="index" align="center" label="序号"></el-table-column>
+
+      <!--                <el-table-column prop="type" label="图书类别" align="center"></el-table-column>-->
+
+      <el-table-column prop="name" label="图书名称" align="center"></el-table-column>
+
+      <!--                <el-table-column prop="description" label="描述" align="center"></el-table-column>-->
+      <el-table-column prop="number" label="数量" align="center"></el-table-column>
+
+      <el-table-column label="操作" align="center">
+
+        <template slot-scope="scope">
+
+
+          <el-button type="success" size="mini" @click="handleReturn(scope.row)">还书</el-button>
+          <el-button type="primary" size="mini" @click="handleReturnAll(scope.row)">归还全部</el-button>
+
+
+        </template>
+
+      </el-table-column>
+
+    </el-table>
+
+
+    <!--分页组件-->
+    <div class="pagination-container">
+
+      <el-pagination
+          class="pagiantion"
+
+          @current-change="handleCurrentChange"
+
+          :current-page="pagination.currentPage"
+
+          :page-size="pagination.pageSize"
+
+          layout="total, prev, pager, next, jumper"
+
+          :total="pagination.total">
+
+      </el-pagination>
+
+    </div>
+
+
+    <!--            还书数量界面-->
+    <div class="add-form">
+      <el-dialog title="还书数量" :visible.sync="dialogFormVisibleReturn">
+        <el-row>
+          <el-input v-model="rbook.rbookNums" type="textarea"> </el-input>
+        </el-row>
+
+        <div slot="footer" class="dialog-footer">
+
+          <el-button @click="cancel()">取消</el-button>
+
+          <el-button type="primary" @click="btnReturn()">确定</el-button>
+
+
+
+
+
+
+
+        </div>
+      </el-dialog>
+
+
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "UserBorrowBooks",
+  data(){
+    return{
+      dialogFormVisibleReturn:false,
+      dataList: [],//当前页要展示的列表数据
+      pagination: {//分页相关模型数据
+        currentPage: 1,//当前页码
+        pageSize:8,//每页显示的记录数
+        total:0,//总记录数
+        type: "",
+        name:"",
+        description:""
+      },
+      rbook:{
+        rbookNums:'',
+        id:''
+      }
+    }
+
+  },
+  //钩子函数，VUE对象初始化完成后自动执行
+  created() {
+    this.getAll();
+  },
+
+  methods:{
+    getAll() {
+      axios.get('http://localhost/borrowOver').then(
+          res=>{
+            this.dataList=res.data.data;
+          },
+      )
+    },
+
+    searchBooks(){
+      axios.get("http://localhost/borrowOver/name/"+this.pagination.name).then(
+          res=>{
+            this.dataList=res.data.data;
+          }
+      )
+    },
+
+    //切换页码
+    handleCurrentChange(currentPage) {
+      this.pagination.currentPage = currentPage;
+      //执行查询
+      this.getAll();
+    },
+    //取消
+    cancel(){
+      this.dialogFormVisibleReturn=false;
+      this.rbook.rbookNums=''
+      this.$message.info("当前操作取消");
+    },
+
+    //还书点击时
+    handleReturn(row){
+      this.rbook.id=row.id;
+      this.dialogFormVisibleReturn=true;
+
+    },
+    //还书确定
+    btnReturn(){
+      axios.get("http://localhost/returns/"+this.rbook.id+"/"+this.rbook.rbookNums).then(
+          res=>{
+            console.log(res.data);
+            if(res.data.flag===true){
+              this.$message.success('还书成功!');
+              this.dialogFormVisibleReturn=false;
+              this.rbook.rbookNums='';
+
+            }
+            else {
+              this.$message.warning('还书失败!')
+            }
+
+          },
+          err=>{
+            console.log(err.message)
+          }
+      ).finally(()=>{
+        this.getAll();
+      })
+    },
+
+    //归还全部
+    handleReturnAll(row){
+      axios.get('http://localhost/returns/'+row.id).then(
+          res=>{
+            if(res.data.flag===true){
+              this.$message.success("已还清全部!");
+            }
+            else{
+              this.$message.warning("出现未知错误!")
+            }
+          },
+          err=>{
+            console.log(err.message)
+          }
+      ).finally(()=>{
+        this.getAll();
+      })
+    },
+
+
+
+
+
+
+
+  },
+}
+</script>
+
+<style scoped>
+
+</style>
