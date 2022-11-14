@@ -27,7 +27,7 @@
 
 
         <div>
-          <button id="login" @click="login()">登录</button>
+          <button id="login" @click="login()"  >登录</button>
           <a id="regist" @click="regist()">注册</a>
         </div>
       </div>

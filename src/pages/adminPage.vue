@@ -30,6 +30,12 @@
                 <span slot="title" >图书管理</span>
               </el-menu-item>
 
+              <el-menu-item index="4" @click="goToHistory()">
+                <i class="el-icon-pie-chart"></i>
+                <span slot="title" >历史记录</span>
+              </el-menu-item>
+
+
             </el-submenu>
 
 
@@ -61,6 +67,9 @@ export default {
     },
     goToBooks(){
       this.$router.push('/admin/books')
+    },
+    goToHistory(){
+      this.$router.push('/admin/history');
     },
     //退出登陆
     loginOut(){

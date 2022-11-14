@@ -9,6 +9,7 @@ import adminPage from "@/pages/adminPage";
 import showBooks from "@/pages/showBooks";
 import showUser from  "@/pages/showUser";
 import homePage from  "@/pages/homePage";
+import showHistory from "@/pages/showHistory";
 
 
 import userPage from "@/pages/User/UserPage";
@@ -45,6 +46,11 @@ const router = new VueRouter({
                 {
                     path: 'home',
                     component: homePage,
+                },
+
+                {
+                    path: 'history',
+                    component: showHistory,
                 }
 
 
