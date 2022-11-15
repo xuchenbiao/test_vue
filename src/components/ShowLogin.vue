@@ -1,38 +1,46 @@
 <template>
-  <div class="box">
-    <i class="el-icon-close" @click="closeDetail()"   style="position:relative ; font-size: 20px;top:-75px; left: 164px; cursor: pointer;"></i>
 
-    <div class="c1">
-      <h1 style="text-align: center" >登陆</h1>
-      <div class="input-box">
-        <label>用户名</label>
-        <input type="text" name="username" v-model="username" />
-      </div>
-      <div class="input-box">
-        <label>密码</label>
-        <input
-            type="password"
-            name="password"
-            id="password"
-            v-model="password"
-        />
-      </div>
-      <div class="btn-box">
+  <div class="border" >
 
+    <div class="content">
+      <div class="box">
+        <i class="el-icon-close" @click="closeDetail()"   style="position:relative ; font-size: 20px;top:-75px; left: 164px; cursor: pointer;"></i>
 
-        <div class="input-box" style="float: left" >
-          <input type="checkbox" v-model="is_admin" style="height: 12px;width: 12px;">
-          <label > 是否为管理员</label>
-        </div>
+        <div class="c1">
+          <h1 style="text-align: center" >登陆</h1>
+          <div class="input-box">
+            <label>用户名</label>
+            <input type="text" name="username" v-model="username" />
+          </div>
+          <div class="input-box">
+            <label>密码</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                v-model="password"
+            />
+          </div>
+          <div class="btn-box">
 
 
-        <div>
-          <button id="login" @click="login()"  >登录</button>
-          <a id="regist" @click="regist()">注册</a>
+            <div class="input-box" style="float: left" >
+              <input type="checkbox" v-model="is_admin" style="height: 12px;width: 12px;">
+              <label > 是否为管理员</label>
+            </div>
+
+
+            <div>
+              <button id="login" @click="login()"  >登录</button>
+              <a id="regist" @click="regist()">注册</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -100,13 +108,32 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.border{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+
+  z-index: 100;
+  background-color: rgba(22,22,22,0.6);
+}
+
+.content{
+  position: relative;
+  width: 360px;
+  height: 420px;
+  margin:  auto;
+  padding-top: 200px;
+
+
+}
 
 .box {
   position:fixed;
-  background-image: url("../assets/xk.gif") !important;
-  top: 200px;
-  left: 1100px;
+  /*background-image: url("../assets/xk.gif") !important;*/
+
+
 
   border-radius: 20px;
   display: flex;
@@ -134,7 +161,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   margin-bottom: 10px;
 }
 
@@ -168,7 +195,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .box .btn-box > a {
@@ -188,7 +215,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   margin-top: 20px;
 }
 

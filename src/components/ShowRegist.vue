@@ -1,32 +1,39 @@
 <template>
-  <div class="box">
-    <i class="el-icon-close" @click="closeDetail()"   style="position:relative ; font-size: 20px;top:-84px; left: 164px; cursor: pointer;"></i>
-    <span @click="back()"    style="color: rgb(22,22,22);position: relative; left:-100px; cursor: pointer;" ><i class="el-icon-arrow-left" ></i>返回</span>
-    <div class="c1">
+  <div class="border">
 
-      <h1 style="text-align: center"  >注册</h1>
-      <div class="input-box">
-        <label>新用户名</label>
-        <input type="text" name="username" v-model="username" />
-      </div>
-      <div class="input-box">
-        <label>密码</label>
-        <input
-            type="password"
-            name="password"
-            id="password"
-            v-model="password"
-        />
-      </div>
-      <div class="btn-box">
-        <a href="#">忘记密码?</a>
-        <div>
-          <button id="regist" @click="regist()">注册</button>
+    <div class="content">
+      <div class="box">
+        <i class="el-icon-close" @click="closeDetail()"   style="position:relative ; font-size: 20px;top:-84px; left: 164px; cursor: pointer;"></i>
+        <span @click="back()"    style="color: rgb(22,22,22);position: relative; left:-100px; cursor: pointer;" ><i class="el-icon-arrow-left" ></i>返回</span>
+        <div class="c1">
 
+          <h1 style="text-align: center"  >注册</h1>
+          <div class="input-box">
+            <label>新用户名</label>
+            <input type="text" name="username" v-model="username" />
+          </div>
+          <div class="input-box">
+            <label>密码</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                v-model="password"
+            />
+          </div>
+          <div class="btn-box">
+            <a href="#">忘记密码?</a>
+            <div>
+              <button id="regist" @click="regist()">注册</button>
+
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -52,9 +59,9 @@ export default {
           res=>{
             console.log(res.data);
             if(res.data.flag===true){
-                this.$message.success(res.data.msg);
+              this.$message.success(res.data.msg);
 
-            //    注册成功后打开登陆组件,关闭注册组件
+              //    注册成功后打开登陆组件,关闭注册组件
               setTimeout(()=>{
                 this.$emit('func1',true,false);
               },1000)
@@ -74,13 +81,31 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.border{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(22,22,22,0.6);
+}
+.content{
+  position: relative;
+  width: 360px;
+  height: 420px;
+  margin:  auto;
+  padding-top: 200px;
+
+
+}
+
+
 
 .box {
   position:fixed;
 
-  top: 200px;
-  left: 1100px;
+
 
   border-radius: 20px;
   display: flex;
@@ -107,7 +132,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   margin-bottom: 10px;
 }
 
@@ -141,7 +166,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .box .btn-box > a {
@@ -161,7 +186,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   margin-top: 20px;
 }
 

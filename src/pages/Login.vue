@@ -1,5 +1,5 @@
 <template>
-  <div id="Login" style="position: relative">
+  <div id="Login" style="position: relative;height: 100%;">
     <!-- 登陆注册弹窗界面 -->
     <ShowLogin v-if="detail" @func="getDetail" ></ShowLogin>
     <ShowRegist v-if="Rdetail" @func1="getDetail1"></ShowRegist>
