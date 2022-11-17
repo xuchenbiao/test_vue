@@ -131,7 +131,7 @@ export default {
 
 .box {
   position:fixed;
-  background-image: url("../assets/xk.gif") !important;
+  /*background-image: url("../assets/xk.gif") !important;*/
 
 
 

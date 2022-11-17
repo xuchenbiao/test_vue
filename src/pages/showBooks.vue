@@ -5,8 +5,10 @@
       <el-input placeholder="图书类别" v-model="pagination.type" @keyup.enter.native="searchByClass()"  style="width: 200px;" class="filter-item"></el-input>
       <el-button @click="searchByClass()" class="dalfBut" >查询</el-button>
 
-      <el-input placeholder="图书名称" v-model="pagination.name" @keyup.enter.native="searchByName()" style="width: 200px;" class="filter-item"></el-input>
-      <el-button @click="searchByName()" class="dalfBut">查询</el-button>
+      <el-input placeholder="图书名称或类别" v-model="pagination.name" @keyup.enter.native="searchByName()" style="width: 200px;margin-left: 10px;" class="filter-item"></el-input>
+      <el-button @click="searchByName()" class="dalfBut" >查询</el-button>
+      <el-button type="primary" class="butT" @click="handleCancel()" v-if="is_cancel">取消查询</el-button>
+
       <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
 
     </div>
@@ -233,6 +235,9 @@ export default {
         borrowNums:'',
         id:''
       },
+
+    //  取消查询
+      is_cancel:false,
     }
 
 
@@ -266,6 +271,7 @@ export default {
       axios.get("http://localhost/books").then((res)=>{
         console.log(res.data)
         this.dataList=res.data.data;
+        this.is_cancel=false;
 
       })
 
@@ -345,7 +351,11 @@ export default {
       });
     },
 
-
+    handleCancel(){
+      this.pagination.name='';
+      this.pagination.type='';
+      this.getAll();
+    },
     //分页查询
 
     //切换页码
@@ -362,42 +372,35 @@ export default {
           res=>{
             if(res.data.flag===true){
               this.dataList=res.data.data;
-              this.pagination.type='';
-              this.pagination.name='';
+
+              this.is_cancel=true;
 
             }
-            else {
 
-              this.pagination.type='';
-              this.pagination.name='';
-
-
-            }
           }
       )
     },
     //    图书名称查询
     searchByName(){
-      axios.get("http://localhost/books/name/"+this.pagination.name).then(
-          res=>{
-            if (res.data.flag===true){
-              this.dataList=res.data.data;
-              this.pagination.name='';
-              this.pagination.type='';
+      if(this.pagination.name===''){
+        this.getAll();
+      }
+      else{
+        axios.get("http://localhost/books/nade/"+this.pagination.name).then(
+            res=>{
+              if (res.data.flag===true){
+                this.dataList=res.data.data;
+
+                this.is_cancel=true;
 
 
 
-            }
-            else {
-
-              this.pagination.name='';
-              this.pagination.type='';
-
-
+              }
 
             }
-          }
-      )
+        )
+      }
+
     }
 
 
