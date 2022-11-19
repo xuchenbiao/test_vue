@@ -58,7 +58,7 @@ export default {
   methods:{
     login(){
       if(this.is_admin===true){
-        axios.post("http://localhost/adminis",{admininame:this.username,adminipassword:this.password}).then(
+        axios.post("http://localhost:8080/api/adminis",{admininame:this.username,adminipassword:this.password}).then(
             res=>{
               console.log(res.data)
               if (res.data.flag===true){
@@ -76,7 +76,7 @@ export default {
         )
       }
       else if(this.is_admin===false){
-        axios.post("http://localhost/logins",{
+        axios.post("http://localhost:8080/api/logins",{
           username:this.username,
           password:this.password,
         }).then(

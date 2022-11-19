@@ -221,7 +221,7 @@ export default {
     },
     //确定二级密码
     spwd(){
-      axios.post("http://localhost/adminiplus",{password:this.input}).then(
+      axios.post("http://localhost:8080/api/adminiplus",{password:this.input}).then(
           res=>{
             console.log(res.data);
             if(res.data.flag===true){
@@ -243,7 +243,7 @@ export default {
         this.getAll();
       }
       else {
-        axios.get('http://localhost/users/name/'+this.input2).then(
+        axios.get('http://localhost:8080/api/users/name/'+this.input2).then(
             res=>{
               if(res.data.flag===true){
                 this.tableData=res.data.data;

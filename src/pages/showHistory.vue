@@ -52,7 +52,7 @@ export default {
   },
   methods:{
     getAll(){
-      axios.get("http://localhost/counts").then(
+      axios.get("http://localhost:8080/api/counts").then(
           res=>{
             console.log(res.data)
             this.tableData=res.data.data;
@@ -61,7 +61,7 @@ export default {
     },
 
     getSum(){
-      axios.get('http://localhost/counts/price').then(
+      axios.get('http://localhost:8080/api/counts/price').then(
           res=>{
             // console.log(res.data);
             if (res.data.flag===true){

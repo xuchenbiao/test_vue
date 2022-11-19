@@ -19,7 +19,7 @@ export default {
   },
 
   mounted(){
-    axios.get('http://localhost/counts/price').then(
+    axios.get('http://localhost:8080/api/counts/price').then(
         res=>{
           // console.log(res.data);
           if (res.data.flag===true){

@@ -55,7 +55,7 @@ export default {
       this.$emit('func1',false,false);
     },
     regist(){
-      axios.post("http://localhost/enrolls",{username:this.username,password:this.password}).then(
+      axios.post("http://localhost:8080/api/enrolls",{username:this.username,password:this.password}).then(
           res=>{
             console.log(res.data);
             if(res.data.flag===true){

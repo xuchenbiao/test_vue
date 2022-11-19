@@ -116,7 +116,7 @@ export default {
 
   methods:{
     getAll() {
-      axios.get('http://localhost/borrowOver').then(
+      axios.get('http://localhost:8080/api/borrowOver').then(
           res=>{
             this.dataList=res.data.data;
           },
@@ -124,7 +124,7 @@ export default {
     },
 
     searchBooks(){
-      axios.get("http://localhost/borrowOver/name/"+this.pagination.name).then(
+      axios.get("http://localhost:8080/api/borrowOver/name/"+this.pagination.name).then(
           res=>{
             this.dataList=res.data.data;
           }
@@ -152,7 +152,7 @@ export default {
     },
     //还书确定
     btnReturn(){
-      axios.get("http://localhost/returns/"+this.rbook.id+"/"+this.rbook.rbookNums).then(
+      axios.get("http://localhost:8080/api/returns/"+this.rbook.id+"/"+this.rbook.rbookNums).then(
           res=>{
             console.log(res.data);
             if(res.data.flag===true){
@@ -176,7 +176,7 @@ export default {
 
     //归还全部
     handleReturnAll(row){
-      axios.get('http://localhost/returns/'+row.id).then(
+      axios.get('http://localhost:8080/api/returns/'+row.id).then(
           res=>{
             if(res.data.flag===true){
               this.$message.success("已还清全部!");

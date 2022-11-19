@@ -292,7 +292,7 @@ export default {
 
     //添加
     handleAdd () {
-      axios.post("http://localhost/books",this.formData).then((res)=>{
+      axios.post("http://localhost:8080/api/books",this.formData).then((res)=>{
         console.log(res)
         this.dialogFormVisible = false;
         this.$message.success("添加成功");
@@ -314,7 +314,7 @@ export default {
     handleDelete(row) {
       //console.log(row)
       this.$confirm("此操作永久删除当前信息，是否继续？","提示",{type:"info"}).then(()=>{
-        axios.delete("http://localhost/books/"+row.id).then((res)=>{
+        axios.delete("http://localhost:8080/api/books/"+row.id).then((res)=>{
           console.log(res);
           this.$message.success("删除成功");
         }).finally(()=>{
@@ -328,7 +328,7 @@ export default {
 
     //弹出编辑窗口
     handleUpdate(row) {
-      axios.get("http://localhost/books/"+row.id).then((res)=>{
+      axios.get("http://localhost:8080/api/books/"+row.id).then((res)=>{
 
         this.dialogFormVisible4Edit = true;
         this.formData = res.data.data;
@@ -338,7 +338,7 @@ export default {
 
     //修改
     handleEdit() {
-      axios.put("http://localhost/books",this.formData).then((res)=>{
+      axios.put("http://localhost:8080/api/books",this.formData).then((res)=>{
         //判断当前操作是否成功
         console.log(res)
         //1.关闭弹层
@@ -368,7 +368,7 @@ export default {
 
     //    图书类别查询
     searchByClass(){
-      axios.get("http://localhost/books/type/"+this.pagination.type).then(
+      axios.get("http://localhost:8080/api/books/type/"+this.pagination.type).then(
           res=>{
             if(res.data.flag===true){
               this.dataList=res.data.data;
@@ -386,7 +386,7 @@ export default {
         this.getAll();
       }
       else{
-        axios.get("http://localhost/books/nade/"+this.pagination.name).then(
+        axios.get("http://localhost:8080/api/books/nade/"+this.pagination.name).then(
             res=>{
               if (res.data.flag===true){
                 this.dataList=res.data.data;

@@ -177,7 +177,7 @@ export default {
       //
       //     this.dataList = res.data.data.records;
       // });
-      axios.get("http://localhost/books").then((res)=>{
+      axios.get("http://localhost:8080/api/books").then((res)=>{
         console.log(res.data)
         this.dataList=res.data.data;
 
@@ -216,7 +216,7 @@ export default {
 
     //修改
     handleEdit() {
-      axios.put("http://localhost/books",this.formData).then((res)=>{
+      axios.put("http://localhost:8080/api/books",this.formData).then((res)=>{
         //判断当前操作是否成功
         console.log(res)
         //1.关闭弹层
@@ -240,7 +240,7 @@ export default {
     //进行借书
     btnBorrow(){
 
-      axios.get("http://localhost/borrows/"+this.borrow.id+"/"+this.borrow.borrowNums).then(
+      axios.get("http://localhost:8080/api/borrows/"+this.borrow.id+"/"+this.borrow.borrowNums).then(
           res=>{
             console.log(res.data);
             if(res.data.flag===true){
@@ -270,7 +270,7 @@ export default {
     },
     //正式添加进购物车
     btnCar(){
-      axios.post('http://localhost/cars',{
+      axios.post('http://localhost:8080/api/cars',{
         name:this.car.name,
         price: this.car.price,
         number:this.car.num
@@ -302,7 +302,7 @@ export default {
 
     //    图书类别查询
     searchByClass(){
-      axios.get("http://localhost/books/type/"+this.pagination.type).then(
+      axios.get("http://localhost:8080/api/books/type/"+this.pagination.type).then(
           res=>{
             if(res.data.flag===true){
               this.dataList=res.data.data;
@@ -322,7 +322,7 @@ export default {
     },
     //    图书名称查询
     searchByName(){
-      axios.get("http://localhost/books/name/"+this.pagination.name).then(
+      axios.get("http://localhost:8080/api/books/name/"+this.pagination.name).then(
           res=>{
             if (res.data.flag===true){
               this.dataList=res.data.data;

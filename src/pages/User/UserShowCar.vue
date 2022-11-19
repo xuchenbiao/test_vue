@@ -78,7 +78,7 @@ export default {
 
   methods:{
     getAll(){
-      axios.get("http://localhost/cars").then(
+      axios.get("http://localhost:8080/api/cars").then(
           res=>{
             if(res.data.flag===true){
               this.tableData=res.data.data;
@@ -88,7 +88,7 @@ export default {
       )
     },
     getSum(){
-      axios.get('http://localhost/cars/price').then(
+      axios.get('http://localhost:8080/api/cars/price').then(
           res=>{
 
             this.sum=res.data.data;
@@ -106,7 +106,7 @@ export default {
         confirmButtonText: "是",
         cancelButtonText: "否",
       }).then(()=>{
-        axios.post("http://localhost/counts").then(
+        axios.post("http://localhost:8080/api/counts").then(
             res=>{
               if (res.data.flag===true){
                 this.$message.success("支付成功!");
@@ -125,7 +125,7 @@ export default {
         confirmButtonText: "是",
         cancelButtonText: "否",
       }).then(() => {
-        axios.delete("http://localhost/cars/"+data.id).then(
+        axios.delete("http://localhost:8080/api/cars/"+data.id).then(
             res => {
               // console.log(res.data);
               if (res.data.flag === true) {
