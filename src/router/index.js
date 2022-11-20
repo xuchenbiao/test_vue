@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 Vue.use(VueRouter);
-
+import axios from  'axios';
 // 登陆组件
 
 import Login from "@/pages/Login";
@@ -106,7 +106,40 @@ const router = new VueRouter({
 
 ],
 
-    
 });
+
+
+//路由导航守卫
+router.beforeEach((to, from, next) => {
+    if (to.path === "/login") return next();
+
+    const local_token = localStorage.token;
+
+    if (!local_token) return next("/login");
+
+
+
+        axios.get('http://localhost:8080/api/adminis').then(
+            res => {
+                console.log(res.data);
+                if (res.data.flag === true) {
+                    return next();
+                } else {
+                    alert("身份过期,请重新登陆!");
+                    return next("/login");
+                }
+            }
+        )
+
+
+
+
+
+
+
+
+    next();
+});
+
 
 export default router;

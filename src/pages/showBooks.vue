@@ -23,6 +23,8 @@
 
       <el-table-column prop="description" label="描述" align="center"></el-table-column>
       <el-table-column prop="number" label="数量" align="center"></el-table-column>
+      <el-table-column prop="price" label="单价" align="center"></el-table-column>
+
 
       <el-table-column label="操作" align="center">
 
@@ -99,6 +101,16 @@
 
             </el-col>
 
+            <el-col :span="12">
+
+              <el-form-item label="单价" prop="price">
+
+                <el-input v-model="formData.price"/>
+
+              </el-form-item>
+
+            </el-col>
+
           </el-row>
 
 
@@ -164,6 +176,16 @@
               <el-form-item label="图书数量" prop="number">
 
                 <el-input v-model="formData.number"/>
+
+              </el-form-item>
+
+            </el-col>
+
+            <el-col :span="12">
+
+              <el-form-item label="单价" prop="price">
+
+                <el-input v-model="formData.price"/>
 
               </el-form-item>
 
