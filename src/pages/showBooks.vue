@@ -268,7 +268,7 @@ export default {
       //
       //     this.dataList = res.data.data.records;
       // });
-      axios.get("http://localhost/books").then((res)=>{
+      axios.get("http://localhost:8080/api/books").then((res)=>{
         console.log(res.data)
         this.dataList=res.data.data;
         this.is_cancel=false;

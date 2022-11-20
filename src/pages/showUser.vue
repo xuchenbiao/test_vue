@@ -140,7 +140,7 @@ export default {
   methods: {
     // 获取用户全部信息
     getAll(){
-      axios.get('http://localhost/adminiplus/admini').then(
+      axios.get('http://localhost:8080/api/adminiplus/admini').then(
           res=>{
             console.log(res.data);
             if (res.data.flag===true){
@@ -157,7 +157,7 @@ export default {
     handleEdit(data) {
       // console.log(index, row);
 
-      axios.get('http://localhost/users/name/'+data.username).then(
+      axios.get('http://localhost:8080/api/users/name/'+data.username).then(
           res=>{
             if(res.data.flag===true){
               // console.log(res.data.data[0]);
@@ -176,7 +176,7 @@ export default {
     },
     //确认编辑
     confirmEdit(){
-      axios.put('http://localhost/users',{
+      axios.put('http://localhost:8080/api/users',{
         id:this.formData.id,
         username:this.formData.username,
         password:this.formData.password
@@ -201,7 +201,7 @@ export default {
       // console.log(index, row);
       this.$confirm('是否删除').then(()=>{
 
-        axios.delete('http://localhost/users/'+data.id).then(
+        axios.delete('http://localhost:8080/api/users/'+data.id).then(
 
             res=>{
               console.log(res.data)

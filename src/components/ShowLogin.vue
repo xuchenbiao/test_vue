@@ -63,6 +63,7 @@ export default {
               console.log(res.data)
               if (res.data.flag===true){
                 this.$message.success('登陆成功!');
+                localStorage.token=res.data.data.token;
                 localStorage.username=this.username;
 
                 this.$router.push('/admin')
@@ -81,9 +82,11 @@ export default {
           password:this.password,
         }).then(
             res=>{
+                console.log(res.data)
               if (res.data.flag===true){
                 this.$message.success('登陆成功!');
                 localStorage.username=this.username;
+                localStorage.token=res.data.data.token;
                 this.$router.push('/user')
               }else {
                 this.$message.warning(res.data.msg)
