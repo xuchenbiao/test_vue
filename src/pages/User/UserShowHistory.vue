@@ -27,7 +27,13 @@
       </el-table-column>
       <el-table-column
           prop="totalprice"
-          label="单项总价">
+          label="单项总价"
+          width="180"
+      >
+      </el-table-column>
+      <el-table-column
+          prop="date"
+          label="日期">
       </el-table-column>
     </el-table>
   </div>
@@ -48,7 +54,7 @@ export default {
   },
   methods:{
     getAll(){
-      axios.get("http://localhost:8080/api/counts").then(
+      axios.get("http://localhost:8080/api/counts/rtotal").then(
           res=>{
             console.log(res.data)
             this.tableData=res.data.data;
