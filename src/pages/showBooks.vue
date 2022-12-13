@@ -247,7 +247,7 @@ export default {
       },
       pagination: {//分页相关模型数据
         currentPage: 1,//当前页码
-        pageSize:8,//每页显示的记录数
+        pageSize:5,//每页显示的记录数
         total:0,//总记录数
         type: "",
         name:"",
@@ -282,20 +282,20 @@ export default {
       // param +="&description="+this.pagination.description;
       // // console.log(param);
       //
-      // //发送异步请求
-      // axios.get("/books/"+this.pagination.currentPage+"/"+this.pagination.pageSize+param).then((res)=>{
-      //     this.pagination.pageSize = res.data.data.size;
-      //     this.pagination.currentPage = res.data.data.current;
-      //     this.pagination.total = res.data.data.total;
+      //发送异步请求
+      axios.get("http://localhost:8080/api/books/"+this.pagination.currentPage+"/"+this.pagination.pageSize).then((res)=>{
+          // this.pagination.pageSize = res.data.data.size;
+          this.pagination.currentPage = res.data.data.current;
+          this.pagination.total = res.data.data.total;
+          this.dataList = res.data.data.records;
+          this.is_cancel=false;
+      });
+      // axios.get("http://localhost:8080/api/books").then((res)=>{
+      //   console.log(res.data)
+      //   this.dataList=res.data.data;
+      //   this.is_cancel=false;
       //
-      //     this.dataList = res.data.data.records;
-      // });
-      axios.get("http://localhost:8080/api/books").then((res)=>{
-        console.log(res.data)
-        this.dataList=res.data.data;
-        this.is_cancel=false;
-
-      })
+      // })
 
 
 
@@ -390,17 +390,24 @@ export default {
 
     //    图书类别查询
     searchByClass(){
-      axios.get("http://localhost:8080/api/books/type/"+this.pagination.type).then(
-          res=>{
-            if(res.data.flag===true){
-              this.dataList=res.data.data;
+      if(this.pagination.type===''){
+        this.getAll();
+      }
+      else{
+        axios.get("http://localhost:8080/api/books/type/"+this.pagination.type).then(
+            res=>{
+              if(res.data.flag===true){
+                this.dataList=res.data.data;
+                // console.log(res.data.data.length)
+                this.pagination.total=res.data.data.length
+                this.is_cancel=true;
 
-              this.is_cancel=true;
+              }
 
             }
+        )
+      }
 
-          }
-      )
     },
     //    图书名称查询
     searchByName(){
@@ -412,6 +419,7 @@ export default {
             res=>{
               if (res.data.flag===true){
                 this.dataList=res.data.data;
+                this.pagination.total=res.data.data.length
 
                 this.is_cancel=true;
 
