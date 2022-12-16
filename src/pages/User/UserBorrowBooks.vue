@@ -96,7 +96,7 @@ export default {
       dataList: [],//当前页要展示的列表数据
       pagination: {//分页相关模型数据
         currentPage: 1,//当前页码
-        pageSize:8,//每页显示的记录数
+        pageSize:5,//每页显示的记录数
         total:0,//总记录数
         type: "",
         name:"",
@@ -116,19 +116,31 @@ export default {
 
   methods:{
     getAll() {
-      axios.get('http://localhost:8080/api/borrowOver').then(
+      axios.get('http://localhost:8080/api/borrowOver/'+this.pagination.currentPage+"/"+this.pagination.pageSize).then(
           res=>{
-            this.dataList=res.data.data;
+            this.pagination.currentPage = res.data.data.current;
+            this.pagination.total = res.data.data.total;
+            this.dataList=res.data.data.records;
+
           },
       )
     },
 
     searchBooks(){
-      axios.get("http://localhost:8080/api/borrowOver/name/"+this.pagination.name).then(
-          res=>{
-            this.dataList=res.data.data;
-          }
-      )
+      if (this.pagination.name===''){
+        this.getAll();
+      }
+      else {
+        axios.get("http://localhost:8080/api/borrowOver/name/"+this.pagination.name).then(
+            res=>{
+
+              this.pagination.total=res.data.data.length;
+              this.dataList=res.data.data;
+
+            }
+        )
+      }
+
     },
 
     //切换页码

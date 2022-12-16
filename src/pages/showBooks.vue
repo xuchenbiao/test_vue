@@ -154,9 +154,10 @@
 
             <el-col :span="12">
 
-              <el-form-item label="图书类别" prop="type">
+              <el-form-item label="图书名称 " prop="name">
 
-                <el-input v-model="formData.type"/>
+<!--                <el-input  :disabled="true" v-model="formData.name"/>-->
+                <span style="float: left ;color: deepskyblue">{{formData.name}}</span>
 
               </el-form-item>
 
@@ -164,13 +165,15 @@
 
             <el-col :span="12">
 
-              <el-form-item label="图书名称" prop="name">
+              <el-form-item label="图书类别" prop="type">
 
-                <el-input v-model="formData.name"/>
+                <el-input  v-model="formData.type"/>
 
               </el-form-item>
 
             </el-col>
+
+
             <el-col :span="12">
 
               <el-form-item label="图书数量" prop="number">
@@ -242,7 +245,7 @@ export default {
       formData: {},//表单数据
       rules: {//校验规则
         type: [{ required: true, message: '图书类别为必填项', trigger: 'blur' }],
-        name: [{ required: true, message: '图书名称为必填项', trigger: 'blur' }],
+        // name: [{ required: true, message: '图书名称为必填项', trigger: 'blur' }],
         number: [{ required: true, message: '图书数量为必填项', trigger: 'blur' }]
       },
       pagination: {//分页相关模型数据
@@ -316,9 +319,15 @@ export default {
     handleAdd () {
       axios.post("http://localhost:8080/api/books",this.formData).then((res)=>{
         console.log(res)
-        this.dialogFormVisible = false;
-        this.$message.success("添加成功");
-        this.getAll();
+        if(res.data.flag===false){
+          this.$message.warning(res.data.msg)
+        }
+        else {
+          this.dialogFormVisible = false;
+          this.$message.success("添加成功");
+          this.getAll();
+        }
+
 
       })
     },

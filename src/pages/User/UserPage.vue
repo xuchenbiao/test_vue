@@ -52,7 +52,8 @@
         </el-aside>
         <el-main>
           <!--          子组件中的子组件-->
-          <router-view></router-view>
+          <router-view ></router-view>
+
         </el-main>
       </el-container>
     </el-container>
